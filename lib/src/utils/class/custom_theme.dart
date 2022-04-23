@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_yodzikir/utils/utils.dart';
+import 'package:flutter_yodzikir/src/utils/utils.dart';
 
 class CustomTheme {
   static ThemeData get lightTheme {
@@ -81,16 +81,16 @@ class CustomTheme {
       primarySwatch: const MaterialColor(
         0xFF0064AD,
         <int, Color>{
-          50: const Color(0xFF0064ec),
-          100: const Color(0xFF0064f3),
-          200: const Color(0xFF0064ec),
-          300: const Color(0xFF0064e4),
-          400: const Color(0xFF0064dc),
-          500: const Color(0xFF0064c3),
-          600: const Color(0xFF0064dc),
-          700: const Color(0xFF0064dc),
-          800: const Color(0xFF0064dc),
-          900: const Color(0xFF0064dc),
+          50: Color(0xFF0064ec),
+          100: Color(0xFF0064f3),
+          200: Color(0xFF0064ec),
+          300: Color(0xFF0064e4),
+          400: Color(0xFF0064dc),
+          500: Color(0xFF0064c3),
+          600: Color(0xFF0064dc),
+          700: Color(0xFF0064dc),
+          800: Color(0xFF0064dc),
+          900: Color(0xFF0064dc),
         },
       ),
       primaryColor: kPrimaryColor,
