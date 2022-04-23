@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_yodzikir/src/ui/splash/splash_screen.dart';
+import 'package:flutter_yodzikir/src/ui/dzikir/dzikir_view.dart';
 import 'package:flutter_yodzikir/src/utils/constants/constants.dart';
 
 class App extends StatefulWidget {
@@ -16,7 +16,10 @@ class _AppState extends State<App> {
       debugShowCheckedModeBanner: false,
       title: appName,
       theme: AppTheme.light,
-      home: const SplashScreen(),
+      home: const Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: DzikirView(),
+      ),
     );
   }
 }

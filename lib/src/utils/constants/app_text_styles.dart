@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppTextStyles {
@@ -16,12 +15,12 @@ class AppTextStyles {
     fontSize: 40,
   );
 
-  static const movieNameTextStyle = TextStyle(
+  static const nameTextStyle = TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 45,
   );
 
-  static const movieDetails = TextStyle(
+  static const detailsTextStyle = TextStyle(
     height: 1.5,
     fontSize: 20,
   );
@@ -33,7 +32,7 @@ class AppTextStyles {
     letterSpacing: 1.1,
   );
 
-  static const movieDescTextStyle = TextStyle(
+  static const descTextStyle = TextStyle(
     fontWeight: FontWeight.w300,
     fontSize: 20,
   );
