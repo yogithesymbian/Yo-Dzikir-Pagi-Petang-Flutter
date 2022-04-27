@@ -6,6 +6,7 @@ class Dzikirs {
   final String? surah;
   final String? ayat;
   final int? mandatoryRead;
+  final bool? isMorning;
 
   const Dzikirs({
     this.title,
@@ -15,6 +16,7 @@ class Dzikirs {
     this.surah,
     this.ayat,
     this.mandatoryRead,
+    this.isMorning,
   });
 }
 
@@ -53,6 +55,7 @@ final dzikirs_master = [
     surah: null,
     ayat: null,
     mandatoryRead: null,
+    isMorning: true,
   ),
   const Dzikirs(
     title: 'Membaca ayat Kursi',
@@ -71,6 +74,7 @@ final dzikirs_master = [
     surah: 'QS. Al Baqarah',
     ayat: '255',
     mandatoryRead: 1,
+    isMorning: true,
   ),
   const Dzikirs(
     title: 'Membaca surat Al Ikhlas, Al Falaq, An Naas',
@@ -88,5 +92,42 @@ final dzikirs_master = [
     surah: 'QS. Al Ikhlas',
     ayat: '1-4',
     mandatoryRead: 1,
+    isMorning: true,
+  ),
+  const Dzikirs(
+    title: 'Petang (TODO) Membaca surat Al Ikhlas, Al Falaq, An Naas',
+    iqra:
+        'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ\n قُلْ هُوَ اللَّهُ أَحَدٌ اللَّهُ الصَّمَدُ لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ',
+    meaning: Meaning(
+      idMeaning:
+          'Dengan menyebut nama Allah Yang Maha Pengasih lagi Maha Penyayang. Katakanlah: Dialah Allah, Yang Maha Esa. Allah adalah ilah yang bergantung kepada-Nya segala urusan. Dia tidak beranak dan tiada pula diperanakkan, dan tidak ada seorang pun yang setara dengan Dia.',
+      enMeaning: '',
+    ),
+    avail: Avail(
+      idAvail: null,
+      enAvail: null,
+    ),
+    surah: 'QS. Al Ikhlas',
+    ayat: '1-4',
+    mandatoryRead: 1,
+    isMorning: false,
+  ),
+  const Dzikirs(
+    title: 'Petang (TODO 1) Membaca surat Al Ikhlas, Al Falaq, An Naas',
+    iqra:
+        'بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ\n قُلْ هُوَ اللَّهُ أَحَدٌ اللَّهُ الصَّمَدُ لَمْ يَلِدْ وَلَمْ يُولَدْ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ',
+    meaning: Meaning(
+      idMeaning:
+          'Dengan menyebut nama Allah Yang Maha Pengasih lagi Maha Penyayang. Katakanlah: Dialah Allah, Yang Maha Esa. Allah adalah ilah yang bergantung kepada-Nya segala urusan. Dia tidak beranak dan tiada pula diperanakkan, dan tidak ada seorang pun yang setara dengan Dia.',
+      enMeaning: '',
+    ),
+    avail: Avail(
+      idAvail: null,
+      enAvail: null,
+    ),
+    surah: 'QS. Al Ikhlas',
+    ayat: '1-4',
+    mandatoryRead: 1,
+    isMorning: false,
   ),
 ];

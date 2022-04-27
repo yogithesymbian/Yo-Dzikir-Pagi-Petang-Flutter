@@ -1,8 +1,10 @@
 import 'dart:ui';
 
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_yodzikir/src/data/models/dzikirs/dzikirs.dart';
 import 'package:flutter_yodzikir/src/utils/constants/constants.dart';
+import 'package:get/get.dart';
 
 class DzikirView extends StatefulWidget {
   const DzikirView({Key? key}) : super(key: key);
@@ -22,6 +24,7 @@ class _DzikirViewState extends State<DzikirView>
   final _showDzikirDetails = ValueNotifier(true);
   bool _lights = false;
   bool _readMode = false;
+  List<Dzikirs> _dzikirList = dzikirs_master;
 
   @override
   void initState() {
@@ -29,17 +32,23 @@ class _DzikirViewState extends State<DzikirView>
       ..addListener(_dzikirCardPagePercentListener);
     _dzikirDetailPageController = PageController()
       ..addListener(_dzikirDetailsPagePercentListener);
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    _dzikirList = dzikirs_master
+        .where((element) =>
+            _readMode ? element.isMorning == false : element.isMorning == true)
+        .toList();
     return Scaffold(
       appBar: AppBar(title: const Text('YoDzikir')),
       body: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SwitchListTile(
               title: Text(_lights == false ? 'Lights Mode' : 'Dark Mode'),
@@ -48,6 +57,20 @@ class _DzikirViewState extends State<DzikirView>
                 setState(() {
                   _lights = value;
                 });
+                Get.changeTheme(
+                  Get.isDarkMode
+                      ? AppTheme.light
+                      : ThemeData.dark().copyWith(
+                          appBarTheme: const AppBarTheme(
+                            elevation: 0,
+                            color: Colors.transparent,
+                            centerTitle: true,
+                            titleTextStyle: TextStyle(
+                              fontSize: 24,
+                            ),
+                          ),
+                        ),
+                );
               },
               secondary: Icon(
                 _lights == false ? Icons.lightbulb_outline : Icons.lightbulb,
@@ -60,6 +83,12 @@ class _DzikirViewState extends State<DzikirView>
                 setState(() {
                   _readMode = value;
                 });
+                Get.snackbar(
+                  "📌",
+                  _readMode == false
+                      ? 'Membaca Dzikir Pagi'
+                      : 'Membaca Dzikir Petang',
+                );
               },
               secondary: Icon(
                 _readMode == false
@@ -68,12 +97,11 @@ class _DzikirViewState extends State<DzikirView>
               ),
             ),
             SizedBox(
-              height: size.height * 0.5,
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final h = constraints.maxHeight;
                   final w = constraints.maxWidth;
-                  return PageView.builder(
+                  return ExpandablePageView.builder(
                     controller: _dzikirCardPageController,
                     clipBehavior: Clip.none,
                     onPageChanged: (page) {
@@ -83,10 +111,10 @@ class _DzikirViewState extends State<DzikirView>
                         curve: Curves.decelerate,
                       );
                     },
-                    itemCount: dzikirs_master.length,
+                    itemCount: _dzikirList.length,
                     itemBuilder: (_, index) {
                       // logic for UI
-                      final dzikirData = dzikirs_master[index];
+                      final dzikirData = _dzikirList[index];
                       final progress = (_dzikirCardPage - index);
                       final scale = lerpDouble(1, .8, progress.abs());
                       final isScrolling = _dzikirCardPageController
@@ -135,13 +163,19 @@ class _DzikirViewState extends State<DzikirView>
                                       !_showDzikirDetails.value;
                                 });
                               },
-                              child: Text(
-                                dzikirData.iqra ?? '-',
-                                textDirection: TextDirection.rtl,
-                                style:
-                                    AppTextStyles.infoTitleTextStyle.copyWith(
-                                  fontSize: 30,
-                                ),
+                              child: Column(
+                                children: [
+                                  const Divider(color: Colors.black),
+                                  Text(
+                                    dzikirData.iqra ?? '-',
+                                    textDirection: TextDirection.rtl,
+                                    style: AppTextStyles.infoTitleTextStyle
+                                        .copyWith(
+                                      fontSize: 25,
+                                    ),
+                                  ),
+                                  const Divider(color: Colors.black)
+                                ],
                               )
                               // Hero(
                               //   tag: dzikirData.image.toString(),
@@ -180,16 +214,16 @@ class _DzikirViewState extends State<DzikirView>
               ),
             ),
             SizedBox(
-              height: size.height * 0.9,
+              height: size.height,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: PageView.builder(
                   controller: _dzikirDetailPageController,
                   physics: const NeverScrollableScrollPhysics(),
                   // scrollDirection: Axis.horizontal,
-                  itemCount: dzikirs_master.length,
+                  itemCount: _dzikirList.length,
                   itemBuilder: (_, index) {
-                    final dzikirData = dzikirs_master[index];
+                    final dzikirData = _dzikirList[index];
                     final opacity =
                         (index - _dzikirDetailsPage).clamp(0.0, 1.0);
                     return Padding(
@@ -200,7 +234,7 @@ class _DzikirViewState extends State<DzikirView>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Hero(
-                              tag: dzikirData.title.toString(),
+                              tag: '${dzikirData.title}',
                               child: Material(
                                 type: MaterialType.transparency,
                                 child: Text(
@@ -219,15 +253,10 @@ class _DzikirViewState extends State<DzikirView>
                                   child: child!,
                                 );
                               },
-                              child: SingleChildScrollView(
-                                child: Container(
-                                  child: Text(
-                                    dzikirData.meaning?.idMeaning ?? '',
-                                    style:
-                                        AppTextStyles.detailsTextStyle.copyWith(
-                                      fontSize: 13.0,
-                                    ),
-                                  ),
+                              child: Text(
+                                dzikirData.meaning?.idMeaning ?? '',
+                                style: AppTextStyles.detailsTextStyle.copyWith(
+                                  fontSize: 13.0,
                                 ),
                               ),
                             )
